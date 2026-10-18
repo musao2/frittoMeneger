@@ -111,12 +111,3 @@ export default function PayDrawer({ row, year, month, onClose, onPaid, advance =
     </div>
   )
 }
-
-function Stat({ label, value, tone = 'text-slate-900' }) {
-  return (
-    <div className="stat-card">
-      <p className="text-sm text-slate-500">{label}</p>
-      <p className={`text-xl font-semibold truncate ${tone}`}>{value}</p>
-    </div>
-  )
-}

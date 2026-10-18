@@ -8,6 +8,7 @@ import { usePermissions } from '../context/PermissionsContext'
 import SalaryBreakdown, { getRemaining } from '../components/SalaryBreakdown'
 import PayslipReceipt from '../components/PayslipReceipt'
 import PayDrawer from '../components/PayDrawer'
+import AdvanceButton from '../components/AdvanceButton'
 
 const MONTHS = ['Yanvar','Fevral','Mart','Aprel','May','Iyun','Iyul','Avgust','Sentabr','Oktabr','Noyabr','Dekabr']
 const pad = (n) => String(n).padStart(2, '0')
@@ -133,6 +134,7 @@ export default function Salary() {
           <select value={year} onChange={e => setYear(Number(e.target.value))} className="input-field w-auto">
             {years.map(y => <option key={y} value={y}>{y}</option>)}
           </select>
+          {perms.give_advance && <AdvanceButton className="h-10" onDone={() => setReload(x => x + 1)} />}
         </div>
       </div>
 
