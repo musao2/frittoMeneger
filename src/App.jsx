@@ -8,6 +8,7 @@ import ManagerLayout from './layouts/ManagerLayout'
 import Employees from './pages/Employees'
 import Salary from './pages/Salary'
 import Attendance from './pages/Attendance'
+import EmployeeDetail from './pages/EmployeeDetail'
 
 function AppRoutes() {
   const { user, profile, loading } = useAuth()
@@ -52,6 +53,7 @@ function ManagerRoutes() {
         <Route index element={<Navigate to="/employees" replace />} />
         <Route path="employees"  element={<Employees />} />
         {canSalary && <Route path="salary" element={<Salary />} />}
+        {canSalary && <Route path="salary/:employeeId" element={<EmployeeDetail />} />}
         {perms.view_attendance && <Route path="attendance" element={<Attendance />} />}
       </Route>
       <Route path="*" element={<Navigate to="/employees" replace />} />

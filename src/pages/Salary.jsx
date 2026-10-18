@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import {
   LuSearch, LuWallet, LuBanknote, LuHandCoins, LuX, LuReceipt,
   LuLayoutGrid, LuList, LuCircleCheck,
@@ -17,8 +18,9 @@ const dayKey = (iso) => new Date(iso).toLocaleDateString('en-CA', { timeZone: 'A
 // Ish haqi — admin paneldagi kabi: kartalar, chek, pul va avans berish
 export default function Salary() {
   const now = new Date()
-  const [year, setYear]   = useState(now.getFullYear())
-  const [month, setMonth] = useState(now.getMonth() + 1)
+  const [params] = useSearchParams()
+  const [year, setYear]   = useState(Number(params.get('y')) || now.getFullYear())
+  const [month, setMonth] = useState(Number(params.get('m')) || now.getMonth() + 1)
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -205,7 +207,13 @@ export default function Salary() {
                     {item.full_name?.[0] || 'X'}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-base font-semibold text-slate-900 truncate">{item.full_name}</p>
+                    <Link
+                      to={`/salary/${item.id}?y=${year}&m=${month}`}
+                      className="block text-base font-semibold text-slate-900 truncate hover:text-emerald-700 hover:underline"
+                      title="Har kungi to'liq ma'lumotni ko'rish"
+                    >
+                      {item.full_name}
+                    </Link>
                     <p className="text-xs text-slate-500 truncate">
                       {item.worked_days} kun · {formatDuration(item.total_worked_seconds)}
                     </p>
@@ -256,7 +264,9 @@ export default function Salary() {
               {list.map(item => (
                 <tr key={item.id} className="table-row">
                   <td className="table-cell">
-                    <p className="font-medium text-slate-900">{item.full_name}</p>
+                    <Link to={`/salary/${item.id}?y=${year}&m=${month}`} className="font-medium text-slate-900 hover:text-emerald-700 hover:underline">
+                      {item.full_name}
+                    </Link>
                     <p className="text-xs text-slate-500">{item.worked_days} kun · {formatDuration(item.total_worked_seconds)}</p>
                   </td>
                   <td className="table-cell text-right">{formatMoney(item.total_earned)}</td>

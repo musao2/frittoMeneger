@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import { LuPlus, LuSearch, LuUsers, LuX, LuSave, LuCircleAlert, LuWandSparkles, LuCopy, LuCheck, LuEye, LuEyeOff } from 'react-icons/lu'
 import {
   supabase, employeeFunctions, salaryRateFunctions, scheduleFunctions, trialFunctions,
@@ -114,7 +115,9 @@ export default function Employees() {
                           {initials(e.full_name)}
                         </div>
                         <div className="min-w-0">
-                          <p className="font-medium text-slate-900 truncate max-w-56">{e.full_name}</p>
+                          {(perms.view_salary || perms.pay_salary || perms.give_advance)
+                            ? <Link to={`/salary/${e.id}`} className="block font-medium text-slate-900 truncate max-w-56 hover:text-emerald-700 hover:underline">{e.full_name}</Link>
+                            : <p className="font-medium text-slate-900 truncate max-w-56">{e.full_name}</p>}
                           <p className="text-xs text-slate-500">{e.phone || "Telefon yo'q"}</p>
                         </div>
                       </div>
